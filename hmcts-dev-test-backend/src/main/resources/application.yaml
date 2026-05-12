@@ -1,0 +1,39 @@
+server:
+  port: 4000
+  shutdown: "graceful"
+
+# If you want to use a database then uncomment the `group:, readiness: and include: "db"`
+# lines in the health probes and uncomment the datasource section
+management:
+  endpoint:
+    health:
+      show-details: "always"
+      # group:
+      #  readiness:
+      #   include: "db"
+  endpoints:
+    web:
+      base-path: /
+      exposure:
+        include: info # should we have more?
+
+springdoc:
+  packagesToScan: uk.gov.hmcts.reform.dev.controllers
+  writer-with-order-by-keys: true
+
+  api-docs:
+    enabled: true
+
+  swagger-ui:
+    enabled: true
+
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb
+  jpa:
+    hibernate:
+      ddl-auto: update
+  h2:
+    console:
+      enabled: true
+

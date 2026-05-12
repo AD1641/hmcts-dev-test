@@ -1,0 +1,133 @@
+{% extends "template.njk" %}
+
+{% block content %}
+<h1 class="govuk-heading-xl">Tasks</h1>
+
+{% if error %}
+  <p class="govuk-error-message">
+    <span class="govuk-visually-hidden">Error:</span>
+    {{ error }}
+  </p>
+{% endif %}
+
+<!-- CREATE TASK FORM -->
+<form method="post" action="/tasks">
+
+  <div class="govuk-form-group">
+    <label class="govuk-label" for="title">
+      Title
+    </label>
+
+    <input
+      class="govuk-input"
+      id="title"
+      name="title"
+      type="text"
+      required
+    >
+  </div>
+
+  <div class="govuk-form-group">
+    <label class="govuk-label" for="description">
+      Description
+    </label>
+
+    <textarea
+      class="govuk-textarea"
+      id="description"
+      name="description"
+      rows="4"
+    ></textarea>
+  </div>
+
+  <div class="govuk-form-group">
+    <label class="govuk-label" for="status">
+      Status
+    </label>
+
+    <select class="govuk-select" id="status" name="status">
+      <option>Pending</option>
+      <option>In Progress</option>
+      <option>Completed</option>
+    </select>
+  </div>
+
+  <div class="govuk-form-group">
+    <label class="govuk-label" for="dueDate">
+      Due Date
+    </label>
+
+    <input
+      class="govuk-input"
+      id="dueDate"
+      name="dueDate"
+      type="date"
+      required
+    >
+  </div>
+
+  <button class="govuk-button" type="submit">
+    Create Task
+  </button>
+
+</form>
+
+<hr>
+
+<!-- LIST TASKS -->
+{% if tasks.length %}
+  {% for task in tasks %}
+
+    <div class="govuk-summary-card govuk-!-margin-bottom-4">
+
+      <div class="govuk-summary-card__title-wrapper">
+        <h2 class="govuk-summary-card__title">
+          {{ task.title }}
+        </h2>
+
+        <strong class="govuk-tag">
+          {{ task.status }}
+        </strong>
+      </div>
+
+      <div class="govuk-summary-card__content">
+
+        <p class="govuk-body">
+          {{ task.description }}
+        </p>
+
+        <p class="govuk-body">
+          <strong>Due:</strong> {{ task.dueDate }}
+        </p>
+
+        <!-- UPDATE STATUS -->
+        <form method="post" action="/tasks/{{ task.id }}/status">
+          <select class="govuk-select" name="status">
+            <option {% if task.status == 'PENDING' %}selected{% endif %}>Pending</option>
+            <option {% if task.status == 'IN_PROGRESS' %}selected{% endif %}>In Progress</option>
+            <option {% if task.status == 'COMPLETED' %}selected{% endif %}>Completed</option>
+          </select>
+
+          <button class="govuk-button govuk-button--secondary" type="submit">
+            Update
+          </button>
+        </form>
+
+        <!-- DELETE -->
+        <form method="post" action="/tasks/{{ task.id }}/delete">
+          <button class="govuk-button govuk-button--warning" type="submit">
+            Delete
+          </button>
+        </form>
+
+      </div>
+
+    </div>
+
+  {% endfor %}
+{% else %}
+  <p class="govuk-body">
+    No tasks available.
+  </p>
+{% endif %}
+{% endblock %}
