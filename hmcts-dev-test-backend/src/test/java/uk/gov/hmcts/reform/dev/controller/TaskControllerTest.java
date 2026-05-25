@@ -12,7 +12,7 @@ import uk.gov.hmcts.reform.dev.models.Task;
 import uk.gov.hmcts.reform.dev.models.TaskStatus;
 import uk.gov.hmcts.reform.dev.service.TaskService;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -38,7 +38,7 @@ class TaskControllerTest {
 
         request.setTitle("Task");
         request.setStatus(TaskStatus.PENDING);
-        request.setDueDate(LocalDateTime.now().plusDays(1));
+        request.setDueDate(LocalDate.now().plusDays(1));
 
         Task task = new Task();
 
@@ -57,8 +57,7 @@ class TaskControllerTest {
         CreateTaskRequest request = new CreateTaskRequest();
 
         request.setStatus(TaskStatus.PENDING);
-        request.setDueDate(LocalDateTime.now().plusDays(1));
-
+        request.setDueDate(LocalDate.now().plusDays(1));
         mockMvc.perform(post("/tasks")
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(objectMapper.writeValueAsString(request)))

@@ -11,7 +11,7 @@ import uk.gov.hmcts.reform.dev.models.Task;
 import uk.gov.hmcts.reform.dev.models.TaskStatus;
 import uk.gov.hmcts.reform.dev.repository.TaskRepository;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -34,7 +34,7 @@ class TaskServiceTest {
 
         request.setTitle("Test Task");
         request.setStatus(TaskStatus.PENDING);
-        request.setDueDate(LocalDateTime.now().plusDays(1));
+        request.setDueDate(LocalDate.now().plusDays(1));
 
         Task savedTask = new Task();
         savedTask.setTitle("Test Task");
