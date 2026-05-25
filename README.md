@@ -8,6 +8,7 @@ cd hmcts-dev-test-backend
 ./gradlew clean build
 ./gradlew clean bootrun
 ```
+When running the backend, visit `http://localhost:4000/swagger-ui/index.html` for API docs.
 
 Start Frontend:
 ```bash
