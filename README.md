@@ -11,6 +11,7 @@ cd hmcts-dev-test-backend
 
 Start Frontend:
 ```bash
+cd hmcts-dev-test-frontend
 yarn install
 yarn webpack
 yarn start:dev
